@@ -39,7 +39,7 @@ export default function LoginPage() {
         router.push("/dashboard");
       }
     } catch (error: unknown) {
-      toast.error(error.message || "Failed to login");
+      toast.error(error instanceof Error ? error.message : "Failed to login");
     } finally {
       setIsLoading(false);
     }

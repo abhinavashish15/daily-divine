@@ -39,7 +39,7 @@ export default function ProfilePage() {
       setUser(updatedUser);
       toast.success("Profile updated successfully");
     } catch (error: unknown) {
-      toast.error(error.message || "Failed to update profile");
+      toast.error(error instanceof Error ? error.message : "Failed to update profile");
     } finally {
       setIsUpdating(false);
     }
@@ -56,7 +56,8 @@ export default function ProfilePage() {
       toast.success("Your account has been permanently deleted.");
       logout(); // This will clear the store and redirect to login
     } catch (error: unknown) {
-      toast.error(error.message || "Failed to delete account");
+      toast.error(error instanceof Error ? error.message : "Failed to delete account");
+    } finally {
       setIsDeleting(false);
     }
   };
