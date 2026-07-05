@@ -32,7 +32,7 @@ export default function RegisterPage() {
       await authService.register(data);
       toast.success("Account created successfully! Please log in.");
       router.push("/login");
-    } catch (error: unknown) {
+    } catch (error: any) {
       toast.error(error.message || "Failed to register");
     } finally {
       setIsLoading(false);
