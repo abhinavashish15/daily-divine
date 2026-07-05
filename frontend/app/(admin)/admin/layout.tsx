@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   BarChart, 
   Users, 
@@ -11,6 +14,7 @@ import {
   Settings,
   LogOut
 } from "lucide-react";
+import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 
 const sidebarNavItems = [
@@ -31,6 +35,19 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin-logout', { method: 'POST' });
+      toast.success("Logged out successfully");
+      router.push('/admin-login');
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to logout");
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-muted/20">
       {/* Sidebar */}
@@ -55,7 +72,10 @@ export default function AdminLayout({
           ))}
         </nav>
         <div className="p-4 mt-auto border-t">
-          <button className="flex w-full items-center gap-3 rounded-md px-3 py-4 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground transition-colors mt-2">
+          <button 
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-md px-3 py-4 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground transition-colors mt-2"
+          >
             <LogOut className="h-4 w-4" />
             Logout
           </button>
