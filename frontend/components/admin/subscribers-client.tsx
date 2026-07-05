@@ -14,6 +14,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { apiClient } from '@/lib/api-client';
+
 type User = {
   id: string;
   name: string | null;
@@ -33,10 +35,8 @@ export function SubscribersClient() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/users');
-      if (!res.ok) throw new Error('Failed to fetch');
-      const data = await res.json();
-      setUsers(data);
+      const res = await apiClient.get('/users');
+      setUsers(res.data);
     } catch (error) {
       toast.error('Failed to load users');
     } finally {
@@ -50,12 +50,9 @@ export function SubscribersClient() {
     setUsers(users.map(u => u.id === id ? { ...u, receiveAutomatedMessages: newValue } : u));
     
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${id}/automation`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ receiveAutomatedMessages: newValue })
+      await apiClient.patch(`/users/${id}/automation`, { 
+        receiveAutomatedMessages: newValue 
       });
-      if (!res.ok) throw new Error('Failed to update');
       toast.success(newValue ? 'Automation Enabled' : 'Automation Paused');
     } catch (error) {
       toast.error('Failed to update settings');
