@@ -25,8 +25,8 @@ export const dailyDeliveryJob = async () => {
       try {
         await deliveryService.processDeliveryForUser(user.id);
         successCount++;
-      } catch (error: any) {
-        console.error(`Failed to process delivery for user ${user.id}:`, error.message);
+      } catch (error: unknown) {
+        console.error(`Failed to process delivery for user ${user.id}:`, error instanceof Error ? error.message : "Unknown error");
         failCount++;
       }
     }

@@ -85,9 +85,9 @@ export const deliveryService = {
 
       return { success: true, deliveryId: delivery.id, messageId };
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Handle failure
-      const errorMessage = error.message || 'Unknown error';
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       await deliveryRepository.update(delivery.id, {
         status: 'FAILED',
         errorMessage,
