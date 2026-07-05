@@ -30,19 +30,18 @@ export function SubscribersClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await apiClient.get('/users');
+        setUsers(res.data);
+      } catch {
+        toast.error('Failed to load users');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchUsers();
   }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const res = await apiClient.get('/users');
-      setUsers(res.data);
-    } catch (error) {
-      toast.error('Failed to load users');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const toggleAutomation = async (id: string, currentValue: boolean) => {
     const newValue = !currentValue;
@@ -54,7 +53,7 @@ export function SubscribersClient() {
         receiveAutomatedMessages: newValue 
       });
       toast.success(newValue ? 'Automation Enabled' : 'Automation Paused');
-    } catch (error) {
+    } catch {
       toast.error('Failed to update settings');
       // Revert UI on failure
       setUsers(users.map(u => u.id === id ? { ...u, receiveAutomatedMessages: currentValue } : u));

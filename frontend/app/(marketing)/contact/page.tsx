@@ -17,7 +17,7 @@ export default function ContactPage() {
         <FadeIn className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-4">Get in Touch</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Have a question or need support? We're here to help you on your spiritual journey.
+            Have a question or need support? We&apos;re here to help you on your spiritual journey.
           </p>
         </FadeIn>
 

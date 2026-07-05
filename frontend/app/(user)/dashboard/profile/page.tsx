@@ -28,7 +28,7 @@ export default function ProfilePage() {
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
       name: user?.name || "",
-      phone: (user as any)?.phone || "",
+      phone: (user as { phone?: string })?.phone || "",
     },
   });
 
@@ -38,7 +38,7 @@ export default function ProfilePage() {
       const updatedUser = await profileService.updateProfile(data);
       setUser(updatedUser);
       toast.success("Profile updated successfully");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error(error.message || "Failed to update profile");
     } finally {
       setIsUpdating(false);
@@ -55,7 +55,7 @@ export default function ProfilePage() {
       await profileService.deleteProfile();
       toast.success("Your account has been permanently deleted.");
       logout(); // This will clear the store and redirect to login
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error(error.message || "Failed to delete account");
       setIsDeleting(false);
     }
