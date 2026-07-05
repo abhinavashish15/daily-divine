@@ -3,12 +3,12 @@ import { deliveryService } from '../services/delivery.service';
 
 export const dailyDeliveryJob = async () => {
   console.log('🔄 Starting daily delivery job...');
-  
+
   try {
     // For MVP: Fetch all active users with role USER or ADMIN (basically everyone who is active)
     // In production, we'd filter by subscription status, timezone, preference deliveryTime, etc.
     // For milestone 2, we just run the job for everyone with a phone number.
-    
+
     const users = await prisma.user.findMany({
       where: {
         phone: { not: null },

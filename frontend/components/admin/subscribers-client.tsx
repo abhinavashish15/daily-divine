@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,30 +30,31 @@ export function SubscribersClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await apiClient.get('/users');
-        setUsers(res.data);
-      } catch {
-        toast.error('Failed to load users');
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await apiClient.get('/users');
+      setUsers(res.data);
+    } catch (error) {
+      toast.error('Failed to load users');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleAutomation = async (id: string, currentValue: boolean) => {
     const newValue = !currentValue;
     // Optimistic UI update
     setUsers(users.map(u => u.id === id ? { ...u, receiveAutomatedMessages: newValue } : u));
-    
+
     try {
-      await apiClient.patch(`/users/${id}/automation`, { 
-        receiveAutomatedMessages: newValue 
+      await apiClient.patch(`/users/${id}/automation`, {
+        receiveAutomatedMessages: newValue
       });
       toast.success(newValue ? 'Automation Enabled' : 'Automation Paused');
-    } catch {
+    } catch (error) {
       toast.error('Failed to update settings');
       // Revert UI on failure
       setUsers(users.map(u => u.id === id ? { ...u, receiveAutomatedMessages: currentValue } : u));
@@ -105,8 +106,8 @@ export function SubscribersClient() {
                         <span className={`text-sm font-medium ${user.receiveAutomatedMessages ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'}`}>
                           {user.receiveAutomatedMessages ? 'Active' : 'Paused'}
                         </span>
-                        <Switch 
-                          checked={user.receiveAutomatedMessages} 
+                        <Switch
+                          checked={user.receiveAutomatedMessages}
                           onCheckedChange={() => toggleAutomation(user.id, user.receiveAutomatedMessages)}
                           className={user.receiveAutomatedMessages ? "data-[state=checked]:bg-green-500" : ""}
                         />

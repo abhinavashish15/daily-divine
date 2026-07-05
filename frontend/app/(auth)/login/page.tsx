@@ -39,7 +39,7 @@ export default function LoginPage() {
         router.push("/dashboard");
       }
     } catch (error: unknown) {
-      toast.error(error instanceof Error ? error.message : "Failed to login");
+      toast.error(error.message || "Failed to login");
     } finally {
       setIsLoading(false);
     }
@@ -53,15 +53,15 @@ export default function LoginPage() {
             <h1 className="text-3xl font-bold tracking-tight mb-2">Welcome Back</h1>
             <p className="text-muted-foreground text-sm">Enter your credentials to access your account</p>
           </div>
-          
+
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input 
-                id="email" 
-                type="email" 
-                placeholder="you@example.com" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                className="h-11 bg-muted/50"
                 {...register("email")}
               />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
@@ -71,11 +71,11 @@ export default function LoginPage() {
                 <Label htmlFor="password">Password</Label>
                 <Link href="/forgot-password" className="text-xs text-primary hover:underline">Forgot Password?</Link>
               </div>
-              <Input 
-                id="password" 
-                type="password" 
-                placeholder="••••••••" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                className="h-11 bg-muted/50"
                 {...register("password")}
               />
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 Remember me for 30 days
               </label>
             </div>
-            
+
             <Button disabled={isLoading} type="submit" className="w-full h-11 text-base rounded-xl mt-4">
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               Sign In
@@ -111,7 +111,7 @@ export default function LoginPage() {
           </Button>
 
           <p className="text-center text-sm text-muted-foreground mt-8">
-            Don&apos;t have an account?{" "}
+            Don't have an account?{" "}
             <Link href="/register" className="text-primary font-medium hover:underline">
               Sign up
             </Link>

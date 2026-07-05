@@ -28,7 +28,7 @@ export default function ProfilePage() {
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
       name: user?.name || "",
-      phone: (user as { phone?: string })?.phone || "",
+      phone: (user as any)?.phone || "",
     },
   });
 
@@ -39,7 +39,7 @@ export default function ProfilePage() {
       setUser(updatedUser);
       toast.success("Profile updated successfully");
     } catch (error: unknown) {
-      toast.error(error instanceof Error ? error.message : "Failed to update profile");
+      toast.error(error.message || "Failed to update profile");
     } finally {
       setIsUpdating(false);
     }
@@ -56,8 +56,7 @@ export default function ProfilePage() {
       toast.success("Your account has been permanently deleted.");
       logout(); // This will clear the store and redirect to login
     } catch (error: unknown) {
-      toast.error(error instanceof Error ? error.message : "Failed to delete account");
-    } finally {
+      toast.error(error.message || "Failed to delete account");
       setIsDeleting(false);
     }
   };
@@ -73,25 +72,25 @@ export default function ProfilePage() {
 
       <div className="bg-card border border-border/50 rounded-3xl p-8 shadow-sm">
         <h2 className="text-xl font-semibold mb-6">Personal Information</h2>
-        
+
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
-            <Input 
-              id="email" 
-              type="email" 
-              value={user.email} 
-              disabled 
-              className="bg-muted/50 cursor-not-allowed" 
+            <Input
+              id="email"
+              type="email"
+              value={user.email}
+              disabled
+              className="bg-muted/50 cursor-not-allowed"
             />
             <p className="text-xs text-muted-foreground">Email addresses cannot be changed.</p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input 
-              id="name" 
-              className="bg-muted/50" 
+            <Input
+              id="name"
+              className="bg-muted/50"
               {...register("name")}
             />
             {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
@@ -99,10 +98,10 @@ export default function ProfilePage() {
 
           <div className="space-y-2">
             <Label htmlFor="phone">Phone Number (WhatsApp)</Label>
-            <Input 
-              id="phone" 
+            <Input
+              id="phone"
               type="tel"
-              className="bg-muted/50" 
+              className="bg-muted/50"
               {...register("phone")}
             />
             {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
@@ -120,8 +119,8 @@ export default function ProfilePage() {
         <p className="text-sm text-muted-foreground mb-6">
           Permanently delete your account and all of your content. This action is not reversible, so please continue with caution.
         </p>
-        <Button 
-          variant="destructive" 
+        <Button
+          variant="destructive"
           onClick={handleDeleteAccount}
           disabled={isDeleting}
           className="rounded-xl"
@@ -132,4 +131,5 @@ export default function ProfilePage() {
       </div>
     </div>
   );
+}
 }

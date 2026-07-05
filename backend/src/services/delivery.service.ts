@@ -45,7 +45,7 @@ export const deliveryService = {
       // Send message
       // Ensure phone is formatted correctly for WhatsApp Cloud API (e.g., removing '+' or '00')
       let formattedPhone = user.phone.replace(/[^0-9]/g, '');
-      
+
       // If it's a 10-digit number (common in India), prepend the country code '91'
       if (formattedPhone.length === 10) {
         formattedPhone = '91' + formattedPhone;
@@ -85,9 +85,9 @@ export const deliveryService = {
 
       return { success: true, deliveryId: delivery.id, messageId };
 
-    } catch (error: unknown) {
+    } catch (error: any) {
       // Handle failure
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage = error.message || 'Unknown error';
       await deliveryRepository.update(delivery.id, {
         status: 'FAILED',
         errorMessage,

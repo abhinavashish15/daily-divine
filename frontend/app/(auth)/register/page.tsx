@@ -33,7 +33,7 @@ export default function RegisterPage() {
       toast.success("Account created successfully! Please log in.");
       router.push("/login");
     } catch (error: unknown) {
-      toast.error(error instanceof Error ? error.message : "Failed to register");
+      toast.error(error.message || "Failed to register");
     } finally {
       setIsLoading(false);
     }
@@ -47,63 +47,63 @@ export default function RegisterPage() {
             <h1 className="text-3xl font-bold tracking-tight mb-2">Create an Account</h1>
             <p className="text-muted-foreground text-sm">Start your spiritual journey today</p>
           </div>
-          
+
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input 
-                id="name" 
-                placeholder="John Doe" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="name"
+                placeholder="John Doe"
+                className="h-11 bg-muted/50"
                 {...register("name")}
               />
               {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input 
-                id="email" 
-                type="email" 
-                placeholder="you@example.com" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                className="h-11 bg-muted/50"
                 {...register("email")}
               />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number (WhatsApp)</Label>
-              <Input 
-                id="phone" 
-                type="tel" 
-                placeholder="+91 9876543210" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="+91 9876543210"
+                className="h-11 bg-muted/50"
                 {...register("phone")}
               />
               {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input 
-                id="password" 
-                type="password" 
-                placeholder="••••••••" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                className="h-11 bg-muted/50"
                 {...register("password")}
               />
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input 
-                id="confirmPassword" 
-                type="password" 
-                placeholder="••••••••" 
-                className="h-11 bg-muted/50" 
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+                className="h-11 bg-muted/50"
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>}
             </div>
-            
+
             <Button disabled={isLoading} type="submit" className="w-full h-11 text-base rounded-xl mt-6">
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               Create Account
