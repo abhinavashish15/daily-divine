@@ -64,7 +64,7 @@ export default function ProfilePage() {
   if (!user) return null;
 
   return (
-    <div className="flex flex-col gap-8 max-w-2xl mx-auto py-8">
+    <div className="flex flex-col gap-8 max-w-2xl mx-auto py-8 overflow-y-auto h-full w-full px-4 pb-24">
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-2">Profile Settings</h1>
         <p className="text-muted-foreground">Manage your account details and preferences.</p>

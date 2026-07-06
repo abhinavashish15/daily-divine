@@ -9,6 +9,8 @@ import deliveryRoutes from './delivery.routes';
 import webhookRoutes from './webhook.routes';
 import userRoutes from './user.routes';
 import paymentRoutes from './payment.routes';
+import logRoutes from './log.routes';
+import adminRoutes from './admin.routes';
 
 const router = Router();
 
@@ -21,5 +23,7 @@ router.use('/deliveries', deliveryRoutes);
 router.use('/webhook', webhookRoutes);
 router.use('/users', userRoutes);
 router.use('/payments', paymentRoutes);
+router.use('/logs', logRoutes);
+router.use('/admin', adminRoutes);
 
 export default router;

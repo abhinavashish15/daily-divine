@@ -88,12 +88,20 @@ model DeliveryLog {
 
 model Payment {
   id            String   @id @default(uuid())
-  userId        String
+  userId        String?
   amount        Float
   plan          String
   transactionId String   @unique
   status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model SystemLog {
+  id        String   @id @default(uuid())
+  action    String
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now())
 }

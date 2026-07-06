@@ -29,7 +29,7 @@ export class PaymentService {
   /**
    * Get all pending payments (Admin only)
    */
-  async getPendingPayments(): Promise<(Payment & { user: { name: string | null; email: string; phone: string | null } })[]> {
+  async getPendingPayments(): Promise<(Payment & { user: { name: string | null; email: string; phone: string | null } | null })[]> {
     return prisma.payment.findMany({
       where: { status: 'PENDING' },
       include: {
@@ -49,7 +49,10 @@ export class PaymentService {
    * Verify and approve a payment (Admin only)
    */
   async verifyPayment(paymentId: string): Promise<Payment> {
-    const payment = await prisma.payment.findUnique({ where: { id: paymentId } });
+    const payment = await prisma.payment.findUnique({ 
+      where: { id: paymentId },
+      include: { user: true }
+    });
     
     if (!payment) {
       throw new Error('Payment not found');
@@ -59,6 +62,15 @@ export class PaymentService {
       throw new Error('Payment is not pending');
     }
 
+    if (!payment.userId) {
+      // User was deleted. Just approve the payment to keep the revenue stat.
+      const updatedPayment = await prisma.payment.update({
+        where: { id: paymentId },
+        data: { status: 'APPROVED' },
+      });
+      return updatedPayment;
+    }
+
     // 1. Update Payment Status
     const updatedPayment = await prisma.payment.update({
       where: { id: paymentId },
@@ -66,9 +78,18 @@ export class PaymentService {
     });
 
     // 2. Update or Create Subscription
-    // Calculate renewal date (1 month from now)
+    // Calculate renewal date based on plan type
     const renewalDate = new Date();
-    renewalDate.setMonth(renewalDate.getMonth() + 1);
+    const planType = payment.plan.toUpperCase();
+    
+    if (planType === 'WEEKLY') {
+      renewalDate.setDate(renewalDate.getDate() + 7);
+    } else if (planType === 'YEARLY') {
+      renewalDate.setFullYear(renewalDate.getFullYear() + 1);
+    } else {
+      // Default to monthly if MONTHLY or unknown
+      renewalDate.setMonth(renewalDate.getMonth() + 1);
+    }
 
     const existingSubscription = await prisma.subscription.findFirst({
       where: { userId: payment.userId },
@@ -94,6 +115,15 @@ export class PaymentService {
       });
     }
 
+    // 3. Create System Log
+    await prisma.systemLog.create({
+      data: {
+        action: 'PAYMENT_APPROVED',
+        message: `Payment of ₹${payment.amount} for ${payment.plan} plan approved for ${(payment as any).user?.email}`,
+        metadata: { paymentId: payment.id, userId: payment.userId }
+      }
+    });
+
     return updatedPayment;
   }
 
@@ -101,7 +131,10 @@ export class PaymentService {
    * Reject a payment (Admin only)
    */
   async rejectPayment(paymentId: string): Promise<Payment> {
-    const payment = await prisma.payment.findUnique({ where: { id: paymentId } });
+    const payment = await prisma.payment.findUnique({ 
+      where: { id: paymentId },
+      include: { user: true }
+    });
     
     if (!payment) {
       throw new Error('Payment not found');
@@ -111,10 +144,21 @@ export class PaymentService {
       throw new Error('Payment is not pending');
     }
 
-    return prisma.payment.update({
+    const updatedPayment = await prisma.payment.update({
       where: { id: paymentId },
       data: { status: 'REJECTED' },
     });
+
+    // Create System Log
+    await prisma.systemLog.create({
+      data: {
+        action: 'PAYMENT_REJECTED',
+        message: `Payment of ₹${payment.amount} for ${payment.plan} plan rejected${payment.userId ? ` for ${(payment as any).user?.email}` : ' (User Deleted)'}`,
+        metadata: { paymentId: payment.id, userId: payment.userId || null }
+      }
+    });
+
+    return updatedPayment;
   }
 }
 

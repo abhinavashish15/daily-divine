@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuthStore } from "@/store/auth.store";
 import { 
   BarChart, 
   Users, 
@@ -37,18 +39,41 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { user, logout } = useAuthStore();
+  const pathname = usePathname();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    // If not logged in, or not an admin, redirect
+    if (!user) {
+      router.push('/login');
+    } else if (user.role !== 'ADMIN') {
+      toast.error("You do not have permission to access the admin portal");
+      router.push('/dashboard');
+    }
+  }, [user, router, pathname, mounted]);
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/admin-logout', { method: 'POST' });
+      logout();
       toast.success("Logged out successfully");
-      router.push('/admin-login');
-      router.refresh();
+      router.push('/login');
     } catch (error) {
       toast.error("Failed to logout");
     }
   };
+
+  // Prevent rendering until hydrated and verified
+  if (!mounted || !user || user.role !== 'ADMIN') {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen bg-muted/20">
