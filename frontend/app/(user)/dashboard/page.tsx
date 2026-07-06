@@ -21,9 +21,10 @@ export default function DashboardHomePage() {
       try {
         const dashboardData = await dashboardService.getUserDashboard();
         setData(dashboardData);
-      } catch (error) {
-        console.error("Failed to fetch dashboard data:", error);
-        toast.error("Failed to load dashboard data");
+      } catch (error: any) {
+        const errorMessage = error?.message || "Failed to load dashboard data";
+        console.error("Failed to fetch dashboard data:", errorMessage, error);
+        toast.error(errorMessage);
       } finally {
         setIsLoading(false);
       }
