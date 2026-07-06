@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Receive Daily Divine Blessings on WhatsApp",
 };
 
+import { Navbar } from "@/components/shared/navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,6 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <AuthProvider>
+          <Navbar />
           {children}
           <Toaster />
         </AuthProvider>

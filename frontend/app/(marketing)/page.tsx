@@ -10,7 +10,6 @@ import {
   Image as ImageIcon, Sparkles, Gift, Clock, Heart,
   UserPlus, Sliders, CheckCircle, MessageSquare, Users, ChevronLeft, ChevronRight
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
@@ -41,7 +40,7 @@ export default function HomePage() {
                   <Button
                     className="w-full sm:w-auto h-[50px] px-[28px] rounded-[16px] bg-gradient-to-r from-[#D4A017] to-[#E2BB53] hover:opacity-90 text-white text-[15px] font-bold shadow-[0_8px_25px_rgba(212,160,23,0.3)] border border-white/20 transition-all flex items-center justify-center group"
                   >
-                    Start Free Trial
+                    Get Started
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
@@ -127,90 +126,6 @@ export default function HomePage() {
                 <p className="text-[#9A9A9A] text-[12px] leading-[18px] px-2">{item.desc}</p>
               </FadeIn>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Stats Strip */}
-      <section className="w-full max-w-[1200px] mx-auto px-6 pt-0 pb-12 mb-10">
-        <FadeIn>
-          <div className="w-full bg-white/30 backdrop-blur-xl rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] py-5 px-8 border border-white/40 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:divide-x divide-[#E8E8E8]">
-            {[
-              { num: "2,500+", text: "Happy Devotees", icon: Users },
-              { num: "75,000+", text: "Messages Delivered", icon: MessageCircle },
-              { num: "4.9/5", text: "Average Rating", icon: Star },
-              { num: "99.9%", text: "Delivery Success", icon: ShieldCheck },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col md:flex-row items-center gap-3 justify-center text-center md:text-left">
-                <div className="w-[42px] h-[42px] rounded-full bg-[#FBF3DC]/80 flex items-center justify-center text-[#D4A017] shrink-0 border border-white/50">
-                  <stat.icon className="w-5 h-5 stroke-[1.5]" />
-                </div>
-                <div className="flex flex-col">
-                  <h4 className="font-bold text-[#1F1F1F] text-[20px] tracking-tight">{stat.num}</h4>
-                  <p className="text-[#9A9A9A] text-[11px] font-medium">{stat.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* 5. Testimonials Section */}
-      <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] pb-10 text-center relative">
-        <div className="w-full bg-white/30 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/40 relative">
-          <FadeIn>
-            <span className="text-[12px] font-bold text-[#D4A017] tracking-[0.15em] uppercase mb-4 block">Testimonials</span>
-            <h2 className="font-heading text-[28px] md:text-[32px] font-bold text-[#1F1F1F] leading-tight mb-12">
-              Loved by Devotees Everywhere
-            </h2>
-          </FadeIn>
-
-          <div className="relative">
-            {/* Navigation Arrows */}
-            <button className="absolute left-[-20px] md:left-[-40px] top-1/2 -translate-y-1/2 w-[44px] h-[44px] rounded-full bg-white/60 backdrop-blur-sm border border-[#E8E8E8] shadow-sm flex items-center justify-center text-[#1F1F1F] hover:bg-[#F9F9F9] z-10 transition-colors">
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button className="absolute right-[-20px] md:right-[-40px] top-1/2 -translate-y-1/2 w-[44px] h-[44px] rounded-full bg-white/60 backdrop-blur-sm border border-[#E8E8E8] shadow-sm flex items-center justify-center text-[#1F1F1F] hover:bg-[#F9F9F9] z-10 transition-colors">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  quote: "Divine Daily has become a beautiful part of my morning routine. The images and messages bring peace and positivity every day.",
-                  name: "Anjali Sharma", location: "Bengaluru, Karnataka", img: "21"
-                },
-                {
-                  quote: "The AI-generated captions are so meaningful. It feels like a personal blessing every single morning.",
-                  name: "Rahul Verma", location: "Pune, Maharashtra", img: "11"
-                },
-                {
-                  quote: "I love how I can customize my preferences. The festival greetings are always on time and beautiful.",
-                  name: "Meera Iyer", location: "Chennai, Tamil Nadu", img: "5"
-                }
-              ].map((t, i) => (
-                <FadeIn key={i} delay={0.2 * i}>
-                  <div className="bg-white/30 backdrop-blur-xl rounded-[20px] p-6 border border-white/40 shadow-[0_8px_30px_rgba(0,0,0,0.05)] text-left flex flex-col h-full relative">
-                    <p className="text-[#5E5E5E] text-[14px] leading-[24px] mb-6 flex-grow">
-                      &quot;{t.quote}&quot;
-                    </p>
-                    <div className="flex items-center gap-1 mb-4">
-                      {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-4 h-4 fill-[#FDBA12] text-[#FDBA12]" />)}
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <Avatar className="w-[44px] h-[44px]">
-                        <AvatarImage src={`https://i.pravatar.cc/150?img=${t.img}`} />
-                        <AvatarFallback>{t.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col">
-                        <h5 className="font-bold text-[#1F1F1F] text-[14px]">{t.name}</h5>
-                        <span className="text-[#9A9A9A] text-[11px] font-medium">{t.location}</span>
-                      </div>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
           </div>
         </div>
       </section>

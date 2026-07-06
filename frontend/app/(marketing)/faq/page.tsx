@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     question: "Can I choose multiple deities?",
-    answer: "Yes! Depending on your plan, you can choose multiple deities. On the Free Trial and Basic plans, you have a limited selection, while Premium and Family plans allow unlimited deity selections."
+    answer: "Yes! Depending on your plan, you can choose multiple deities. On the Basic plan, you have a limited selection, while Premium and Family plans allow unlimited deity selections."
   },
   {
     question: "What languages are supported?",

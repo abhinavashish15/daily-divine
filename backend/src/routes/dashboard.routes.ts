@@ -5,8 +5,10 @@ import { requireAdmin } from '../middlewares/admin.middleware';
 
 const router = Router();
 
-router.use(requireAuth, requireAdmin);
+// User route
+router.get('/me', requireAuth, dashboardController.getUserDashboard);
 
-router.get('/', dashboardController.getDashboard);
+// Admin route
+router.get('/', requireAuth, requireAdmin, dashboardController.getDashboard);
 
 export default router;

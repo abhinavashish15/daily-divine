@@ -8,6 +8,7 @@ import dashboardRoutes from './dashboard.routes';
 import deliveryRoutes from './delivery.routes';
 import webhookRoutes from './webhook.routes';
 import userRoutes from './user.routes';
+import paymentRoutes from './payment.routes';
 
 const router = Router();
 
@@ -19,5 +20,6 @@ router.use('/dashboard', dashboardRoutes);
 router.use('/deliveries', deliveryRoutes);
 router.use('/webhook', webhookRoutes);
 router.use('/users', userRoutes);
+router.use('/payments', paymentRoutes);
 
 export default router;

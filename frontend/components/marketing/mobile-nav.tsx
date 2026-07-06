@@ -37,12 +37,11 @@ export function MobileNav() {
               </svg>
               <span className="text-[18px] leading-[1.1] font-bold text-[#D4A017] font-heading tracking-tight">Divine Daily</span>
             </div>
-            
+
             <nav className="flex flex-col space-y-6 text-[16px] font-semibold text-[#1F1F1F]">
               <Link href="/features" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Features</Link>
               <Link href="/how-it-works" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">How It Works</Link>
               <Link href="/pricing" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Pricing</Link>
-              <Link href="/testimonials" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Testimonials</Link>
               <Link href="/faq" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">FAQs</Link>
               <Link href="/contact" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Contact</Link>
             </nav>
@@ -62,7 +61,7 @@ export function MobileNav() {
               ) : (
                 <>
                   <Link href="/login" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Login</Link>
-                  <Link href="/register" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Start Free Trial</Link>
+                  <Link href="/register" onClick={closeMenu} className="transition-colors hover:text-[#D4A017]">Get Started</Link>
                 </>
               )}
             </div>

@@ -39,3 +39,11 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'ADMIN') {
+    next();
+  } else {
+    next(new AppError('Forbidden - Admin access required', 403));
+  }
+};

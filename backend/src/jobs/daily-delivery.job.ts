@@ -13,6 +13,11 @@ export const dailyDeliveryJob = async () => {
       where: {
         phone: { not: null },
         receiveAutomatedMessages: true,
+        subscriptions: {
+          some: {
+            status: 'ACTIVE'
+          }
+        }
       },
     });
 

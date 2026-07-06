@@ -1,8 +1,4 @@
 import { FadeIn } from "@/components/shared/FadeIn";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Phone } from "lucide-react";
 
 export const metadata = {
@@ -12,79 +8,58 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col items-center py-24 bg-background min-h-screen">
-      <div className="container px-4 md:px-6 mx-auto max-w-6xl">
-        <FadeIn className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tighter mb-4">Get in Touch</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+    <div className="flex flex-col items-center justify-center w-full flex-1 bg-[#FCFBF8] bg-[url('/mobile_background.png')] lg:bg-[url('/herosection.png')] bg-cover bg-center bg-fixed bg-no-repeat relative overflow-hidden py-4">
+      {/* Full Background Blur Overlay */}
+      <div className="absolute inset-0 backdrop-blur-3xl bg-white/30 z-0"></div>
+
+      <div className="container px-4 md:px-6 mx-auto relative z-10 max-w-[1400px]">
+        <FadeIn className="text-center mb-8 flex flex-col items-center">
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1F1F1F] mb-4 leading-tight">Get in Touch</h1>
+          <p className="text-[14px] md:text-[15px] text-[#5E5E5E] max-w-2xl mx-auto font-medium leading-relaxed px-4">
             Have a question or need support? We're here to help you on your spiritual journey.
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <FadeIn delay={0.1} className="flex flex-col justify-center space-y-8">
+        <FadeIn delay={0.1} className="max-w-lg mx-auto">
+          <div className="bg-white/40 backdrop-blur-xl border border-white/40 rounded-[28px] p-6 md:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.06)] flex flex-col items-center text-center space-y-6">
             <div>
-              <h3 className="text-2xl font-semibold mb-2">Contact Information</h3>
-              <p className="text-muted-foreground mb-6">Fill out the form and our team will get back to you within 24 hours.</p>
+              <h3 className="font-heading text-xl font-bold text-[#1F1F1F] mb-1">Contact Information</h3>
+              <p className="text-[#9A9A9A] text-[13px]">Reach out to us directly through any of the channels below.</p>
             </div>
 
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <Mail className="w-5 h-5" />
+            <div className="w-full space-y-3">
+              <div className="flex flex-col md:flex-row items-center gap-4 bg-white/50 border border-white/60 rounded-[16px] p-4 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#FBF3DC] flex items-center justify-center shrink-0">
+                  <Mail className="w-4 h-4 text-[#D4A017]" />
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Email</p>
-                  <p className="text-lg">support@divinedaily.app</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Phone</p>
-                  <p className="text-lg">+91 (800) 123-4567</p>
+                <div className="md:text-left text-center">
+                  <p className="text-[11px] font-bold text-[#9A9A9A] uppercase tracking-wider mb-0.5">Email</p>
+                  <p className="text-[15px] font-bold text-[#1F1F1F]">abhinavashissh@gmail.com</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">WhatsApp Support</p>
-                  <p className="text-lg">+91 (800) 123-4567</p>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
 
-          <FadeIn delay={0.2}>
-            <div className="bg-card border border-border/50 rounded-3xl p-8 shadow-lg">
-              <form className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" placeholder="John Doe" className="h-12 bg-muted/50" />
+              <div className="flex flex-col md:flex-row items-center gap-4 bg-white/50 border border-white/60 rounded-[16px] p-4 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#FBF3DC] flex items-center justify-center shrink-0">
+                  <Phone className="w-4 h-4 text-[#D4A017]" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" className="h-12 bg-muted/50" />
+                <div className="md:text-left text-center">
+                  <p className="text-[11px] font-bold text-[#9A9A9A] uppercase tracking-wider mb-0.5">Phone</p>
+                  <p className="text-[15px] font-bold text-[#1F1F1F]">+91 63765 06645</p>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="How can we help?" className="h-12 bg-muted/50" />
+              </div>
+
+              <div className="flex flex-col md:flex-row items-center gap-4 bg-white/50 border border-white/60 rounded-[16px] p-4 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#FBF3DC] flex items-center justify-center shrink-0">
+                  <MessageSquare className="w-4 h-4 text-[#D4A017]" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" placeholder="Your message here..." className="min-h-[120px] bg-muted/50 resize-none" />
+                <div className="md:text-left text-center">
+                  <p className="text-[11px] font-bold text-[#9A9A9A] uppercase tracking-wider mb-0.5">WhatsApp Support</p>
+                  <p className="text-[15px] font-bold text-[#1F1F1F]">+91 63765 06645</p>
                 </div>
-                <Button type="button" size="lg" className="w-full h-12 text-base rounded-xl">
-                  Send Message
-                </Button>
-              </form>
+              </div>
             </div>
-          </FadeIn>
-        </div>
+          </div>
+        </FadeIn>
       </div>
     </div>
   );
