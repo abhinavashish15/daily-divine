@@ -50,7 +50,7 @@ export default function BillingPage() {
   };
 
   return (
-    <div className="flex flex-col gap-8 max-w-4xl mx-auto p-4 sm:p-8">
+    <div className="flex flex-col gap-8 max-w-4xl mx-auto p-4 sm:p-8 overflow-y-auto h-full w-full pb-20">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Upgrade Your Plan</h1>
         <p className="text-muted-foreground mt-2">Choose a plan, scan the QR code to pay, and submit your transaction ID.</p>

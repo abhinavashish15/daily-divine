@@ -109,7 +109,7 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/register" className="w-full mt-auto">
+                <Link href="/dashboard/billing" className="w-full mt-auto">
                   <Button size="lg" className={`w-full rounded-[16px] h-[52px] text-[15px] font-bold transition-all ${plan.highlighted ? 'bg-gradient-to-r from-[#D4A017] to-[#E2BB53] hover:opacity-90 text-white shadow-[0_8px_25px_rgba(212,160,23,0.3)] border border-white/20' : 'bg-white text-[#1F1F1F] hover:bg-[#F9F9F9] border border-[#E8E8E8]'}`}>
                     {plan.buttonText}
                   </Button>

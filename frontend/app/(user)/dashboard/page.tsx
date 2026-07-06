@@ -43,10 +43,10 @@ export default function DashboardHomePage() {
 
   const planName = data?.subscription?.plan || "Free";
   const statusLabel = data?.subscription ? "Active" : "Inactive";
-  const statusColor = data?.subscription 
-    ? "bg-green-500/10 text-green-600 border-green-500/20" 
+  const statusColor = data?.subscription
+    ? "bg-green-500/10 text-green-600 border-green-500/20"
     : "bg-zinc-500/10 text-zinc-600 border-zinc-500/20";
-    
+
   const deliveryTime = "06:00 AM";
   const deitiesCount = data?.preference?.preferredDeities?.length || 0;
   const deitiesNames = data?.preference?.preferredDeities?.join(", ") || "None selected";
@@ -75,8 +75,8 @@ export default function DashboardHomePage() {
           <CardContent>
             <div className="text-2xl font-bold text-gray-900 dark:text-white">{planName}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              {data?.subscription?.renewalDate 
-                ? `Renews on ${format(new Date(data.subscription.renewalDate), 'MMM dd, yyyy')}` 
+              {data?.subscription?.renewalDate
+                ? `Renews on ${format(new Date(data.subscription.renewalDate), 'MMM dd, yyyy')}`
                 : "Upgrade to a paid plan"}
             </p>
           </CardContent>

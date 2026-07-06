@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import { Navbar } from "@/components/shared/navbar";
+import { GlobalSubscriptionPopup } from "@/components/user/global-subscription-popup";
 
 export default function RootLayout({
   children,
@@ -35,6 +36,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
+          <GlobalSubscriptionPopup />
           <Toaster />
         </AuthProvider>
       </body>
