@@ -8,8 +8,8 @@ const router = Router();
 // Test delivery (admin only)
 router.post('/send', requireAuth, requireAdmin, deliveryController.sendTestDelivery);
 
-// Manual trigger for daily delivery (temporarily available to normal users for testing)
-router.post('/trigger-daily', requireAuth, deliveryController.triggerDailyDelivery);
+// Manual trigger for daily delivery (admin only)
+router.post('/trigger-daily', requireAuth, requireAdmin, deliveryController.triggerDailyDelivery);
 
 // Get paginated deliveries (admin only)
 router.get('/', requireAuth, requireAdmin, deliveryController.getDeliveries);
