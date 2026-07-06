@@ -14,15 +14,15 @@ import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center bg-[#FCFBF8] bg-[url('/herosection.png')] bg-cover bg-center bg-fixed bg-no-repeat min-h-screen relative overflow-hidden">
+    <div className="flex flex-col items-center bg-[#FCFBF8] bg-[url('/mobile_background.png')] lg:bg-[url('/herosection.png')] bg-cover bg-center bg-fixed bg-no-repeat min-h-screen relative overflow-hidden">
       {/* Hero Background Wrapper */}
       <div className="w-full relative flex flex-col justify-center pt-12 pb-16 lg:pb-20">
         {/* Hero Section Container */}
         <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
 
           {/* LEFT SIDE (50%) */}
-          <div className="w-full lg:col-span-6 flex flex-col items-start text-left relative z-20">
-            <FadeIn>
+          <div className="w-full lg:col-span-6 flex flex-col items-start text-left relative z-20 mt-4 lg:mt-0">
+            <FadeIn className="w-full bg-white/30 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-6 sm:p-8 lg:p-0 rounded-[24px] lg:rounded-none border border-white/40 lg:border-none shadow-[0_8px_30px_rgba(0,0,0,0.06)] lg:shadow-none">
               <div className="inline-flex items-center rounded-full bg-[#FBF3DC] px-[18px] py-[8px] text-[12px] font-bold text-[#D4A017] mb-6 shadow-[0_2px_10px_rgba(212,160,23,0.1)]">
                 <span className="mr-2">✨</span> Start Your Day with Divine Blessings
               </div>
@@ -55,26 +55,6 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-
-              {/* Social Proof */}
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <Avatar key={i} className="w-[40px] h-[40px] border-[2px] border-white shadow-sm rounded-full bg-[#E8E8E8]">
-                      <AvatarImage src={`https://i.pravatar.cc/150?img=${i + 20}`} alt={`User ${i}`} />
-                      <AvatarFallback>U{i}</AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
-                <div className="flex flex-col justify-center">
-                  <div className="flex items-center gap-1 mb-1">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="w-[14px] h-[14px] fill-[#FDBA12] text-[#FDBA12]" />
-                    ))}
-                  </div>
-                  <span className="text-[12px] font-medium text-[#9A9A9A]">Trusted by 2,500+ devotees</span>
-                </div>
-              </div>
             </FadeIn>
           </div>
 
@@ -86,7 +66,7 @@ export default function HomePage() {
 
       {/* 2. Features Section (8-Card Grid) */}
       <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] pt-10 pb-4 text-center">
-        <div className="w-full bg-white/40 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/60">
+        <div className="w-full bg-white/30 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/40">
           <FadeIn>
             <span className="text-[12px] font-bold text-[#D4A017] tracking-[0.15em] uppercase mb-4 block">Features</span>
             <h2 className="font-heading text-[28px] md:text-[32px] font-bold text-[#1F1F1F] leading-tight mb-10">
@@ -106,7 +86,7 @@ export default function HomePage() {
               { icon: ShieldCheck, title: "Secure & Private", desc: "Your data and preferences are 100% safe with us." },
             ].map((feat, i) => (
               <FadeIn key={i} delay={0.1 * i}>
-                <div className="bg-white/40 backdrop-blur-xl rounded-[20px] p-5 border border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all flex flex-col items-center text-center h-full group">
+                <div className="bg-white/30 backdrop-blur-xl rounded-[20px] p-5 border border-white/40 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] transition-all flex flex-col items-center text-center h-full group">
                   <div className="w-[48px] h-[48px] rounded-full bg-[#FBF3DC]/80 flex items-center justify-center text-[#D4A017] mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white/50">
                     <feat.icon className="w-5 h-5 stroke-[1.5]" />
                   </div>
@@ -121,7 +101,7 @@ export default function HomePage() {
 
       {/* 3. How It Works Section */}
       <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] pt-8 pb-8 mb-10 text-center">
-        <div className="w-full bg-white/40 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/60">
+        <div className="w-full bg-white/30 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/40">
           <FadeIn>
             <span className="text-[12px] font-bold text-[#D4A017] tracking-[0.15em] uppercase mb-4 block">How It Works</span>
             <h2 className="font-heading text-[28px] md:text-[32px] font-bold text-[#1F1F1F] leading-tight mb-14">
@@ -140,7 +120,7 @@ export default function HomePage() {
               { step: "4. Receive Blessings", icon: MessageSquare, desc: "Get daily devotional messages on your WhatsApp." },
             ].map((item, i) => (
               <FadeIn key={i} delay={0.2 * i} className="relative z-10 flex flex-col items-center w-full md:w-[22%] mb-12 md:mb-0">
-                <div className="w-[60px] h-[60px] rounded-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center text-[#D4A017] mb-4">
+                <div className="w-[60px] h-[60px] rounded-full bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_20px_rgba(0,0,0,0.06)] flex items-center justify-center text-[#D4A017] mb-4">
                   <item.icon className="w-6 h-6 stroke-[1.5]" />
                 </div>
                 <h4 className="font-bold text-[#1F1F1F] text-[14px] mb-2">{item.step}</h4>
@@ -154,7 +134,7 @@ export default function HomePage() {
       {/* 4. Stats Strip */}
       <section className="w-full max-w-[1200px] mx-auto px-6 pt-0 pb-12 mb-10">
         <FadeIn>
-          <div className="w-full bg-white/40 backdrop-blur-xl rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] py-5 px-8 border border-white/60 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:divide-x divide-[#E8E8E8]">
+          <div className="w-full bg-white/30 backdrop-blur-xl rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] py-5 px-8 border border-white/40 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:divide-x divide-[#E8E8E8]">
             {[
               { num: "2,500+", text: "Happy Devotees", icon: Users },
               { num: "75,000+", text: "Messages Delivered", icon: MessageCircle },
@@ -177,7 +157,7 @@ export default function HomePage() {
 
       {/* 5. Testimonials Section */}
       <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] pb-10 text-center relative">
-        <div className="w-full bg-white/40 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/60 relative">
+        <div className="w-full bg-white/30 backdrop-blur-xl rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-8 md:p-12 border border-white/40 relative">
           <FadeIn>
             <span className="text-[12px] font-bold text-[#D4A017] tracking-[0.15em] uppercase mb-4 block">Testimonials</span>
             <h2 className="font-heading text-[28px] md:text-[32px] font-bold text-[#1F1F1F] leading-tight mb-12">
@@ -210,7 +190,7 @@ export default function HomePage() {
                 }
               ].map((t, i) => (
                 <FadeIn key={i} delay={0.2 * i}>
-                  <div className="bg-white/40 backdrop-blur-xl rounded-[20px] p-6 border border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.05)] text-left flex flex-col h-full relative">
+                  <div className="bg-white/30 backdrop-blur-xl rounded-[20px] p-6 border border-white/40 shadow-[0_8px_30px_rgba(0,0,0,0.05)] text-left flex flex-col h-full relative">
                     <p className="text-[#5E5E5E] text-[14px] leading-[24px] mb-6 flex-grow">
                       &quot;{t.quote}&quot;
                     </p>
