@@ -1,13 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
 import { deliveryService } from '../services/delivery.service';
 import { sendSuccess } from '../utils/response';
-
+import { dailyDeliveryJob } from '../jobs/daily-delivery.job';
 export const deliveryController = {
   async sendTestDelivery(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId, deity } = req.body;
       const result = await deliveryService.processDeliveryForUser(userId, deity);
       sendSuccess(res, result, 'Test delivery initiated successfully', 201);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async triggerDailyDelivery(req: Request, res: Response, next: NextFunction) {
+    try {
+      // Trigger asynchronously to avoid request timeout if there are many users
+      dailyDeliveryJob();
+      sendSuccess(res, null, 'Daily delivery job triggered manually');
     } catch (error) {
       next(error);
     }
