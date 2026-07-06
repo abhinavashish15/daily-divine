@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
 import { 
   LayoutDashboard, 
   CreditCard, 
@@ -48,6 +52,14 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
+
   return (
     <div className="flex min-h-screen bg-muted/20">
       {/* Sidebar */}
@@ -78,7 +90,10 @@ export default function DashboardLayout({
               <HelpCircle className="h-4 w-4" />
               Support
             </Link>
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+            <button 
+              onClick={handleLogout}
+              className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+            >
               <LogOut className="h-4 w-4" />
               Logout
             </button>
