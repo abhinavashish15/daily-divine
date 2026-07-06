@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { NavbarAuth } from "@/components/marketing/navbar-auth";
+import { MobileNav } from "@/components/marketing/mobile-nav";
 
 export default function PublicLayout({
   children,
@@ -20,9 +20,9 @@ export default function PublicLayout({
                 <path d="M12 22C14.97 22 18 19.97 18 13C15.03 13 12 10.97 12 6C12 10.97 8.97 13 6 13C8.97 13 12 19.97 12 22Z" />
                 <path d="M12 22V13" />
               </svg>
-              <div className="flex flex-col">
-                <span className="text-[20px] leading-[1.1] font-bold text-[#D4A017] font-heading tracking-tight">Divine Daily</span>
-                <span className="text-[10px] text-[#9A9A9A] font-medium tracking-tight">Daily Blessings, Delivered</span>
+              <div className="flex flex-col shrink-0">
+                <span className="text-[18px] md:text-[20px] leading-[1.1] font-bold text-[#D4A017] font-heading tracking-tight whitespace-nowrap">Divine Daily</span>
+                <span className="hidden sm:block text-[10px] text-[#9A9A9A] font-medium tracking-tight whitespace-nowrap mt-0.5">Daily Blessings, Delivered</span>
               </div>
             </Link>
           </div>
@@ -36,7 +36,10 @@ export default function PublicLayout({
             <Link href="/contact" className="transition-colors hover:text-[#D4A017]">Contact</Link>
           </nav>
 
-          <NavbarAuth />
+          <div className="flex items-center gap-2 lg:gap-4">
+            <NavbarAuth />
+            <MobileNav />
+          </div>
         </div>
       </header>
 

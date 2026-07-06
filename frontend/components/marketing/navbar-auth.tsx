@@ -42,10 +42,11 @@ export function NavbarAuth() {
       </Link>
       <Link href="/register">
         <Button
-          className="h-[44px] px-6 rounded-[14px] bg-gradient-to-r from-[#D4A017] to-[#E2BB53] hover:opacity-90 text-white text-[14px] font-semibold shadow-[0_8px_20px_rgba(212,160,23,0.3)] border border-white/20 transition-all flex items-center"
+          className="h-[38px] sm:h-[44px] px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-gradient-to-r from-[#D4A017] to-[#E2BB53] hover:opacity-90 text-white text-[13px] sm:text-[14px] font-semibold shadow-[0_8px_20px_rgba(212,160,23,0.3)] border border-white/20 transition-all flex items-center"
         >
-          Start Free Trial
-          <ArrowRight className="ml-2 w-4 h-4" />
+          <span className="hidden sm:inline">Start Free Trial</span>
+          <span className="sm:hidden">Start Trial</span>
+          <ArrowRight className="ml-1.5 sm:ml-2 w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </Button>
       </Link>
     </div>

@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-[#FCFBF8] bg-[url('/herosection.png')] bg-cover bg-center bg-fixed bg-no-repeat min-h-screen relative overflow-hidden">
       {/* Hero Background Wrapper */}
-      <div className="w-full relative min-h-[calc(100vh-80px)] flex flex-col justify-center pt-12 pb-32">
+      <div className="w-full relative flex flex-col justify-center pt-12 pb-16 lg:pb-20">
         {/* Hero Section Container */}
         <section className="w-full max-w-[1400px] mx-auto px-6 lg:px-[80px] relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
 
@@ -79,7 +79,7 @@ export default function HomePage() {
           </div>
 
           {/* RIGHT SIDE (Empty as requested) */}
-          <div className="w-full lg:col-span-6 flex justify-center lg:justify-end relative min-h-[600px]">
+          <div className="hidden lg:block lg:col-span-6">
           </div>
         </section>
       </div>
