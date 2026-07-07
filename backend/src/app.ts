@@ -17,6 +17,11 @@ app.use(morgan('dev'));
 // API Routes
 app.use('/api', routes);
 
+// Ping Route for Keep-Awake
+app.get('/api/ping', (req, res) => {
+  res.status(200).send('pong');
+});
+
 // 404 Handler
 app.use((req, res) => {
   sendError(res, 'Route not found', 404);

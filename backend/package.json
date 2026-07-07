@@ -27,6 +27,7 @@
     "puppeteer": "^25.3.0",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.34.7",
+    "wwebjs-postgres": "^1.0.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.1.0",
     "@types/node-cron": "^3.0.11",
+    "@types/pg": "^8.20.0",
     "@types/qrcode-terminal": "^0.12.2",
     "nodemon": "^3.1.14",
     "prisma": "^5.22.0",

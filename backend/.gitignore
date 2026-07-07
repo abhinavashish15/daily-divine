@@ -15,3 +15,5 @@ dist/
 .wwebjs_auth/
 .wwebjs_cache/
 .cache/
+RemoteAuth/
+RemoteAuth.zip
