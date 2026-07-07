@@ -1,8 +1,5 @@
-import { Client, RemoteAuth, MessageMedia } from 'whatsapp-web.js';
+import { Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
 import qrcode from 'qrcode-terminal';
-import { Pool } from 'pg';
-// @ts-ignore
-import { PostgresStore } from 'wwebjs-postgres';
 import puppeteer from 'puppeteer';
 import { AppError } from '../middlewares/error.middleware';
 import { deliveryService } from './delivery.service'; // We will need to update this to handle statuses
@@ -17,17 +14,8 @@ export const whatsappService = {
     // Always use the top-level puppeteer executable path
     let execPath = await puppeteer.executablePath();
 
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL
-    });
-    const store = new PostgresStore({ pool });
-
     client = new Client({
-      authStrategy: new RemoteAuth({
-        store: store,
-        dataPath: './',
-        backupSyncIntervalMs: 600000 // 10 minutes instead of 5 to reduce CPU/RAM spikes
-      }),
+      authStrategy: new LocalAuth(),
       puppeteer: {
         ...(execPath ? { executablePath: execPath } : {}),
         args: [
