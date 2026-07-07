@@ -11,12 +11,15 @@ export const whatsappService = {
   async initialize() {
     console.log('🔄 Initializing whatsapp-web.js client...');
 
-    const execPath = await puppeteer.executablePath();
+    let execPath;
+    if (process.env.NODE_ENV === 'production') {
+      execPath = await puppeteer.executablePath();
+    }
 
     client = new Client({
       authStrategy: new LocalAuth(),
       puppeteer: {
-        executablePath: execPath,
+        ...(execPath ? { executablePath: execPath } : {}),
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       }
     });
