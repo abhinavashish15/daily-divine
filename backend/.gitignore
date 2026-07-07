@@ -10,3 +10,8 @@ dist/
 
 # OS Files
 .DS_Store
+
+# WhatsApp Web & Puppeteer Cache
+.wwebjs_auth/
+.wwebjs_cache/
+.cache/
