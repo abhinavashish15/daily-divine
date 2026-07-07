@@ -36,8 +36,8 @@ export const whatsappService = {
       console.log('📱 Scan this QR code with WhatsApp to log in:');
       qrcode.generate(qr, { small: true });
       
-      const qrUrl = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${encodeURIComponent(qr)}&choe=UTF-8`;
-      console.log(`\n\n⚠️ IF THE QR CODE ABOVE IS TOO BIG, CLICK THIS LINK TO OPEN IT IN YOUR BROWSER:\n${qrUrl}\n\n`);
+      const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(qr)}&size=300`;
+      console.log(`\n\n⚠️ IF THE TERMINAL QR CODE IS HARD TO SCAN, CLICK THIS LINK TO OPEN IT IN YOUR BROWSER:\n${qrUrl}\n\n`);
     });
 
     client.on('ready', () => {
