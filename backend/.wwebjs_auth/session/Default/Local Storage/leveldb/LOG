@@ -1,0 +1,6 @@
+2026/07/07-10:44:04.103 8ccbe Reusing MANIFEST /Users/abhinavashish/Desktop/whatsapp_auto/backend/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
+2026/07/07-10:44:04.105 8ccbe Recovering log #3
+2026/07/07-10:44:04.105 8ccbe Reusing old log /Users/abhinavashish/Desktop/whatsapp_auto/backend/.wwebjs_auth/session/Default/Local Storage/leveldb/000003.log 
+2026/07/07-10:45:04.114 8ccc1 Level-0 table #5: started
+2026/07/07-10:45:04.119 8ccc1 Level-0 table #5: 20409 bytes OK
+2026/07/07-10:45:04.121 8ccc1 Delete type=0 #3

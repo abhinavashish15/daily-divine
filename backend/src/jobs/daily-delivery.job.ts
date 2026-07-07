@@ -12,7 +12,6 @@ export const dailyDeliveryJob = async () => {
     const users = await prisma.user.findMany({
       where: {
         phone: { not: null },
-        receiveAutomatedMessages: true,
         subscriptions: {
           some: {
             status: 'ACTIVE'

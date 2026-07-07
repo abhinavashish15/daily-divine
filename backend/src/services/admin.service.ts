@@ -26,13 +26,13 @@ export class AdminService {
     const formattedUsers = users.map((user) => {
       const activeSub = user.subscriptions[0];
       let daysLeft = 0;
-      
+
       if (activeSub && activeSub.status === 'ACTIVE' && activeSub.renewalDate) {
         const now = new Date();
         const renewal = new Date(activeSub.renewalDate);
         if (renewal > now) {
           const diffTime = Math.abs(renewal.getTime() - now.getTime());
-          daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+          daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         }
       }
 
@@ -52,6 +52,55 @@ export class AdminService {
       totalUsers: users.length,
       users: formattedUsers,
     };
+  }
+
+  async broadcastMessage(text?: string, imageId?: string) {
+    const { whatsappService } = await import('./whatsapp.service');
+    
+    let image: any = null;
+    if (imageId) {
+      image = await prisma.image.findUnique({ where: { id: imageId } });
+      if (!image) {
+        throw new Error('Selected template image not found');
+      }
+    }
+
+    // Fetch users who have a phone number
+    const users = await prisma.user.findMany({
+      where: {
+        phone: { not: null }
+      }
+    });
+
+    let successCount = 0;
+    let failCount = 0;
+
+    for (const user of users) {
+      try {
+        let formattedPhone = user.phone!.replace(/[^0-9]/g, '');
+        if (formattedPhone.length === 10) {
+          formattedPhone = '91' + formattedPhone;
+        }
+        formattedPhone = formattedPhone + '@c.us'; // using whatsapp-web.js format!
+
+        if (image) {
+          await whatsappService.sendImageMessage(
+            formattedPhone, 
+            image.imageUrl, 
+            image.caption || text || ''
+          );
+        } else if (text) {
+          await whatsappService.sendTextMessage(formattedPhone, text);
+        }
+        
+        successCount++;
+      } catch (error: any) {
+        console.error(`Failed to send broadcast to ${user.phone}:`, error);
+        failCount++;
+      }
+    }
+
+    return { successCount, failCount, total: users.length };
   }
 }
 

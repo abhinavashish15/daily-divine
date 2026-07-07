@@ -1,140 +1,95 @@
-import { WHATSAPP_CONFIG } from '../config/whatsapp';
-import crypto from 'crypto';
+import { Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
+import qrcode from 'qrcode-terminal';
 import { AppError } from '../middlewares/error.middleware';
+import { deliveryService } from './delivery.service'; // We will need to update this to handle statuses
+
+let client: Client | null = null;
+let isReady = false;
 
 export const whatsappService = {
-  async sendTextMessage(to: string, text: string): Promise<any> {
-    if (!WHATSAPP_CONFIG.PHONE_NUMBER_ID || !WHATSAPP_CONFIG.ACCESS_TOKEN) {
-      throw new AppError('WhatsApp configuration is missing', 500);
-    }
+  initialize() {
+    console.log('🔄 Initializing whatsapp-web.js client...');
 
-    const url = `${WHATSAPP_CONFIG.BASE_URL}/${WHATSAPP_CONFIG.PHONE_NUMBER_ID}/messages`;
-    
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${WHATSAPP_CONFIG.ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messaging_product: 'whatsapp',
-        recipient_type: 'individual',
-        to,
-        type: 'text',
-        text: { preview_url: false, body: text },
-      }),
+    client = new Client({
+      authStrategy: new LocalAuth(),
+      puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      }
     });
 
-    const data = await response.json();
-    if (!response.ok) {
-      throw new AppError(data.error?.message || 'Failed to send WhatsApp message', response.status);
+    client.on('qr', (qr) => {
+      console.log('📱 Scan this QR code with WhatsApp to log in:');
+      qrcode.generate(qr, { small: true });
+      
+      const qrUrl = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${encodeURIComponent(qr)}&choe=UTF-8`;
+      console.log(`\n\n⚠️ IF THE QR CODE ABOVE IS TOO BIG, CLICK THIS LINK TO OPEN IT IN YOUR BROWSER:\n${qrUrl}\n\n`);
+    });
+
+    client.on('ready', () => {
+      console.log('✅ WhatsApp Client is ready!');
+      isReady = true;
+    });
+
+    client.on('authenticated', () => {
+      console.log('✅ WhatsApp Authenticated!');
+    });
+
+    client.on('auth_failure', msg => {
+      console.error('❌ WhatsApp Authentication failure:', msg);
+    });
+
+    client.on('message_ack', async (msg, ack) => {
+      /*
+        ACK values:
+        1: Sent
+        2: Received
+        3: Read
+        4: Played
+      */
+      let statusStr = 'sent';
+      if (ack === 2) statusStr = 'delivered';
+      if (ack === 3) statusStr = 'read';
+      
+      try {
+        if (msg.id._serialized) {
+          // This calls the existing deliveryService handler, we just map the ack
+          await deliveryService.handleWebhookStatusUpdate(msg.id._serialized, statusStr, []);
+        }
+      } catch (err) {
+        // Log silently
+      }
+    });
+
+    client.initialize();
+  },
+
+  async sendTextMessage(to: string, text: string): Promise<any> {
+    if (!client || !isReady) {
+      throw new AppError('WhatsApp client is not ready', 503);
     }
-    return data;
+    try {
+      const response = await client.sendMessage(to, text);
+      return { success: true, messageId: response.id._serialized };
+    } catch (error: any) {
+      throw new AppError(error.message || 'Failed to send text message', 500);
+    }
   },
 
   async sendImageMessage(to: string, imageUrl: string, caption?: string): Promise<any> {
-    if (!WHATSAPP_CONFIG.PHONE_NUMBER_ID || !WHATSAPP_CONFIG.ACCESS_TOKEN) {
-      throw new AppError('WhatsApp configuration is missing', 500);
+    if (!client || !isReady) {
+      throw new AppError('WhatsApp client is not ready', 503);
     }
-
-    const url = `${WHATSAPP_CONFIG.BASE_URL}/${WHATSAPP_CONFIG.PHONE_NUMBER_ID}/messages`;
-    
-    const payload: any = {
-      messaging_product: 'whatsapp',
-      recipient_type: 'individual',
-      to,
-      type: 'image',
-      image: { link: imageUrl },
-    };
-
-    if (caption) {
-      payload.image.caption = caption;
+    try {
+      const media = await MessageMedia.fromUrl(imageUrl);
+      const response = await client.sendMessage(to, media, { caption });
+      return { success: true, messageId: response.id._serialized };
+    } catch (error: any) {
+      throw new AppError(error.message || 'Failed to send image', 500);
     }
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${WHATSAPP_CONFIG.ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-    if (!response.ok) {
-      throw new AppError(data.error?.message || 'Failed to send WhatsApp image', response.status);
-    }
-    return data;
   },
 
   async sendTemplateImageMessage(to: string, imageUrl: string, caption: string): Promise<any> {
-    if (!WHATSAPP_CONFIG.PHONE_NUMBER_ID || !WHATSAPP_CONFIG.ACCESS_TOKEN) {
-      throw new AppError('WhatsApp configuration is missing', 500);
-    }
-
-    const url = `${WHATSAPP_CONFIG.BASE_URL}/${WHATSAPP_CONFIG.PHONE_NUMBER_ID}/messages`;
-    
-    // We assume a template named 'daily_blessing' exists in Meta
-    // with 1 header variable (the image URL) and 1 body variable (the caption)
-    const payload: any = {
-      messaging_product: 'whatsapp',
-      recipient_type: 'individual',
-      to,
-      type: 'template',
-      template: {
-        name: 'daily_blessing',
-        language: { code: 'en' },
-        components: [
-          {
-            type: 'header',
-            parameters: [
-              {
-                type: 'image',
-                image: { link: imageUrl }
-              }
-            ]
-          },
-          {
-            type: 'body',
-            parameters: [
-              {
-                type: 'text',
-                text: caption
-              }
-            ]
-          }
-        ]
-      }
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${WHATSAPP_CONFIG.ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-    if (!response.ok) {
-      throw new AppError(data.error?.message || 'Failed to send WhatsApp template image', response.status);
-    }
-    return data;
-  },
-
-  verifyWebhook(mode: string, token: string, challenge: string): string | null {
-    if (mode === 'subscribe' && token === WHATSAPP_CONFIG.VERIFY_TOKEN) {
-      return challenge;
-    }
-    return null;
-  },
-
-  validateSignature(payload: string, signature: string): boolean {
-    if (!WHATSAPP_CONFIG.APP_SECRET) return true; // Skip validation if no secret
-    const expectedSignature = 'sha256=' + crypto.createHmac('sha256', WHATSAPP_CONFIG.APP_SECRET)
-      .update(payload, 'utf8')
-      .digest('hex');
-    return crypto.timingSafeEqual(Buffer.from(expectedSignature), Buffer.from(signature));
+    // whatsapp-web.js doesn't use Meta Templates. We just send a regular image.
+    return this.sendImageMessage(to, imageUrl, caption);
   }
 };

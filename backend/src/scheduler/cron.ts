@@ -4,8 +4,8 @@ import { dailyDeliveryJob } from '../jobs/daily-delivery.job';
 export const initScheduler = () => {
   console.log('⏰ Initializing CRON Scheduler...');
 
-  // Run every day at 06:00 AM Asia/Kolkata timezone
-  cron.schedule('0 6 * * *', () => {
+  // Run every day at 11:00 AM Asia/Kolkata timezone
+  cron.schedule('0 11 * * *', () => {
     console.log('⏰ Triggering daily delivery job...');
     dailyDeliveryJob();
   }, {

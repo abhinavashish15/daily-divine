@@ -2,12 +2,16 @@ import app from './app';
 import { env } from './config/env';
 import { prisma } from './config/prisma';
 import { initScheduler } from './scheduler/cron';
+import { whatsappService } from './services/whatsapp.service';
 
 const startServer = async () => {
   try {
     // Connect to database
     await prisma.$connect();
     console.log('📦 Connected to PostgreSQL database via Prisma');
+
+    // Initialize WhatsApp Web JS Client
+    whatsappService.initialize();
 
     // Initialize CRON scheduler
     initScheduler();

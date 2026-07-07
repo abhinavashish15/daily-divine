@@ -50,10 +50,11 @@ export const deliveryService = {
       if (formattedPhone.length === 10) {
         formattedPhone = '91' + formattedPhone;
       }
+      formattedPhone = formattedPhone + '@c.us';
 
       const caption = image.caption || '';
 
-      // Now using the approved template message
+      // Now using the whatsapp-web.js format
       const response = await whatsappService.sendTemplateImageMessage(
         formattedPhone,
         image.imageUrl,
