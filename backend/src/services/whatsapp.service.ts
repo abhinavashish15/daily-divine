@@ -26,7 +26,7 @@ export const whatsappService = {
       authStrategy: new RemoteAuth({
         store: store,
         dataPath: './',
-        backupSyncIntervalMs: 300000
+        backupSyncIntervalMs: 600000 // 10 minutes instead of 5 to reduce CPU/RAM spikes
       }),
       puppeteer: {
         ...(execPath ? { executablePath: execPath } : {}),
@@ -39,6 +39,7 @@ export const whatsappService = {
           '--no-zygote',
           '--single-process',
           '--disable-gpu',
+          '--disable-features=site-per-process',
         ],
       }
     });
