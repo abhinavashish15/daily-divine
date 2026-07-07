@@ -11,7 +11,7 @@ const startServer = async () => {
     console.log('📦 Connected to PostgreSQL database via Prisma');
 
     // Initialize WhatsApp Web JS Client
-    whatsappService.initialize();
+    await whatsappService.initialize();
 
     // Initialize CRON scheduler
     initScheduler();

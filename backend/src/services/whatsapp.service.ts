@@ -1,5 +1,6 @@
 import { Client, LocalAuth, MessageMedia } from 'whatsapp-web.js';
 import qrcode from 'qrcode-terminal';
+import puppeteer from 'puppeteer';
 import { AppError } from '../middlewares/error.middleware';
 import { deliveryService } from './delivery.service'; // We will need to update this to handle statuses
 
@@ -7,12 +8,15 @@ let client: Client | null = null;
 let isReady = false;
 
 export const whatsappService = {
-  initialize() {
+  async initialize() {
     console.log('🔄 Initializing whatsapp-web.js client...');
+
+    const execPath = await puppeteer.executablePath();
 
     client = new Client({
       authStrategy: new LocalAuth(),
       puppeteer: {
+        executablePath: execPath,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       }
     });
